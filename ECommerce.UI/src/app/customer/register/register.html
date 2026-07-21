@@ -1,0 +1,63 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h3 class="text-center mb-4">Create Account</h3>
+
+                    <form [formGroup]="registerForm" (submit)="register()">
+                        <div class="mb-3">
+                            <label class="form-label">Email address <span class="text-danger">*</span> </label>
+                            <input type="email" class="form-control" formControlName="email" placeholder="Enter email">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">First Name <span class="text-danger">*</span> </label>
+                                <input type="text" class="form-control" formControlName="firstName" placeholder="Enter First Name">
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Last Name <span class="text-danger">*</span> </label>
+                                <input type="text" class="form-control" formControlName="lastName" placeholder="Enter Last Name">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Middle Name</label>
+                            <input type="text" class="form-control" formControlName="middleName" placeholder="Enter Middle Name">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Phone <span class="text-danger">*</span> </label>
+                                <input type="text" class="form-control" formControlName="phone" placeholder="Enter Phone">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Date Of Birth <span class="text-danger">*</span> </label>
+                                <input type="date" class="form-control" formControlName="dob" placeholder="Enter DOB">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Password <span class="text-danger">*</span> </label>
+                                <input type="password" class="form-control" formControlName="password" placeholder="Enter password">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Confirm Password <span class="text-danger">*</span> </label>
+                                <input type="password" class="form-control" formControlName="confirmPassword" placeholder="confirm password">
+                                <p *ngIf="registerForm.value.password != registerForm.value.confirmPassword && registerForm.value.confirmPassword" class="text-danger">Confirm password not matching with password</p>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100" [disabled]="registerForm.invalid">
+                            Register
+                        </button>
+                        <button class="btn btn-link" (click)="gotoLogin()">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

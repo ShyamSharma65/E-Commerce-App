@@ -1,0 +1,17 @@
+.home-container {
+  min-height: 75vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  padding: 4rem 1rem;
+}
+
+.hero {
+  max-width: 720px;
+  padding: 2.5rem;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+}
+
+.hero .btn {
+  min-width: 140px;
+}
