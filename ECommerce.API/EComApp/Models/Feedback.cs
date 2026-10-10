@@ -2,7 +2,7 @@
 
 namespace ECommerceAPI.Models
 {
-    public class Feedback
+    public class Feedback : AuditableEntity
     {
         public int Id { get; set; }
         // Foreign key to Customer

@@ -1,17 +1,197 @@
-.home-container {
-  min-height: 75vh;
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-  padding: 4rem 1rem;
+.shop-shell {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8f9fa 0%, #eff5ff 100%);
+  padding: 2rem;
 }
 
-.hero {
-  max-width: 720px;
-  padding: 2.5rem;
+.hero-panel {
+  max-width: 760px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 18px;
+  padding: 3rem 2rem;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+}
+
+.store-layout {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2rem;
+}
+
+.store-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: #ffffff;
+  border: 1px solid #edf2f7;
+  border-radius: 20px;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+  margin-bottom: 1rem;
+}
+
+.brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
   border-radius: 12px;
-  background: rgba(255,255,255,0.9);
-  box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #ff4d8d, #ff7a59);
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
 }
 
-.hero .btn {
-  min-width: 140px;
+.brand-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
 }
+
+.brand-wrap small {
+  color: #64748b;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.suggestion-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.suggestion-badges span {
+  background: #f1f5f9;
+  color: #334155;
+  border-radius: 999px;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.logout-btn {
+  border: 1px solid #fca5a5;
+  background: #fff1f2;
+  color: #be123c;
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+}
+
+.category-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  padding: 0.6rem 0 1rem;
+}
+
+.category-pill {
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #475569;
+  padding: 0.6rem 0.9rem;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.category-pill.active {
+  background: linear-gradient(135deg, #d946ef, #ec4899);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 12px 25px rgba(236, 72, 153, 0.2);
+}
+
+.promo-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.promo-card {
+  border-radius: 18px;
+  padding: 1.2rem 1rem;
+  color: white;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+}
+
+.accent-one { background: linear-gradient(135deg, #0ea5e9, #2563eb); }
+.accent-two { background: linear-gradient(135deg, #ec4899, #f59e0b); }
+.accent-three { background: linear-gradient(135deg, #10b981, #14b8a6); }
+
+.promo-card span {
+  font-size: 0.8rem;
+  letter-spacing: 0.08rem;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.promo-card strong {
+  font-size: 1.4rem;
+  margin: 0.35rem 0;
+}
+
+.product-card {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.product-image {
+  height: 220px;
+  object-fit: cover;
+}
+
+.cart-panel,
+.orders-panel,
+.empty-state {
+  border-radius: 16px;
+}
+
+.cart-item {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.order-row {
+  background: #f8fafc;
+}
+
+.empty-state {
+  padding: 2rem;
+  text-align: center;
+  color: #475569;
+  background: #f8fafc;
+}
+
+@media (max-width: 768px) {
+  .store-topbar,
+  .top-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .promo-strip {
+    grid-template-columns: 1fr;
+  }
+}
+

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ECommerceAPI.Models
 {
-    public class OrderItem
+    public class OrderItem : AuditableEntity
     {
         public int Id { get; set; }
         // Foreign key to Order

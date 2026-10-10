@@ -5,7 +5,7 @@ namespace ECommerceAPI.Models
 {
         [Index(nameof(Name), Name = "IX_Name_Unique", IsUnique = true)]
         // Represents a product category
-        public class Category
+        public class Category : AuditableEntity
         {
             public int Id { get; set; }
 

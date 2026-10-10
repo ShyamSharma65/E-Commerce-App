@@ -22,7 +22,7 @@ namespace ECommerceAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("EComApp.Models.Address", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,8 +47,22 @@ namespace ECommerceAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
@@ -65,7 +79,7 @@ namespace ECommerceAPI.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("EComApp.Models.Cancellation", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Cancellation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -75,6 +89,20 @@ namespace ECommerceAPI.Migrations
 
                     b.Property<decimal?>("CancellationCharges")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<decimal>("OrderAmount")
                         .HasColumnType("decimal(18,2)");
@@ -111,7 +139,7 @@ namespace ECommerceAPI.Migrations
                     b.ToTable("Cancellations");
                 });
 
-            modelBuilder.Entity("EComApp.Models.Cart", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Cart", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -122,11 +150,25 @@ namespace ECommerceAPI.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsCheckedOut")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -138,7 +180,7 @@ namespace ECommerceAPI.Migrations
                     b.ToTable("Carts");
                 });
 
-            modelBuilder.Entity("EComApp.Models.CartItem", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.CartItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -152,8 +194,22 @@ namespace ECommerceAPI.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<decimal>("Discount")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -179,13 +235,20 @@ namespace ECommerceAPI.Migrations
                     b.ToTable("CartItems");
                 });
 
-            modelBuilder.Entity("EComApp.Models.Category", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -194,6 +257,13 @@ namespace ECommerceAPI.Migrations
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -211,26 +281,41 @@ namespace ECommerceAPI.Migrations
                         new
                         {
                             Id = 1,
+                            CreatedBy = "System",
+                            CreatedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2829),
                             Description = "Electronic devices and accessories",
                             IsActive = true,
+                            ModifiedBy = "System",
+                            ModifiedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2829),
                             Name = "Electronics"
                         },
                         new
                         {
                             Id = 2,
+                            CreatedBy = "System",
+                            CreatedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2832),
                             Description = "Books and magazines",
                             IsActive = true,
+                            ModifiedBy = "System",
+                            ModifiedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2832),
                             Name = "Books"
                         });
                 });
 
-            modelBuilder.Entity("EComApp.Models.Customer", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
@@ -256,11 +341,22 @@ namespace ECommerceAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -272,7 +368,7 @@ namespace ECommerceAPI.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("EComApp.Models.Feedback", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Feedback", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -287,8 +383,22 @@ namespace ECommerceAPI.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
@@ -308,7 +418,7 @@ namespace ECommerceAPI.Migrations
                     b.ToTable("Feedbacks");
                 });
 
-            modelBuilder.Entity("EComApp.Models.Order", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Order", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -319,8 +429,22 @@ namespace ECommerceAPI.Migrations
                     b.Property<int>("BillingAddressId")
                         .HasColumnType("int");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
@@ -359,7 +483,7 @@ namespace ECommerceAPI.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("EComApp.Models.OrderItem", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.OrderItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -367,8 +491,22 @@ namespace ECommerceAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<decimal>("Discount")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
@@ -394,7 +532,7 @@ namespace ECommerceAPI.Migrations
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("EComApp.Models.Payment", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Payment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -404,6 +542,20 @@ namespace ECommerceAPI.Migrations
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
@@ -432,7 +584,7 @@ namespace ECommerceAPI.Migrations
                     b.ToTable("Payments");
                 });
 
-            modelBuilder.Entity("EComApp.Models.Product", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -442,6 +594,13 @@ namespace ECommerceAPI.Migrations
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -456,6 +615,13 @@ namespace ECommerceAPI.Migrations
 
                     b.Property<bool>("IsAvailable")
                         .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -479,10 +645,14 @@ namespace ECommerceAPI.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
+                            CreatedBy = "System",
+                            CreatedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2854),
                             Description = "Latest model smartphone with advanced features.",
                             DiscountPercentage = 10,
                             ImageUrl = "https://example.com/images/smartphone.jpg",
                             IsAvailable = true,
+                            ModifiedBy = "System",
+                            ModifiedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2855),
                             Name = "Smartphone",
                             Price = 699.99m,
                             StockQuantity = 50
@@ -491,10 +661,14 @@ namespace ECommerceAPI.Migrations
                         {
                             Id = 2,
                             CategoryId = 1,
+                            CreatedBy = "System",
+                            CreatedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2863),
                             Description = "High-performance laptop suitable for all your needs.",
                             DiscountPercentage = 15,
                             ImageUrl = "https://example.com/images/laptop.jpg",
                             IsAvailable = true,
+                            ModifiedBy = "System",
+                            ModifiedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2863),
                             Name = "Laptop",
                             Price = 999.99m,
                             StockQuantity = 30
@@ -503,17 +677,21 @@ namespace ECommerceAPI.Migrations
                         {
                             Id = 3,
                             CategoryId = 2,
+                            CreatedBy = "System",
+                            CreatedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2865),
                             Description = "A thrilling science fiction novel set in the future.",
                             DiscountPercentage = 5,
                             ImageUrl = "https://example.com/images/scifi-novel.jpg",
                             IsAvailable = true,
+                            ModifiedBy = "System",
+                            ModifiedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2865),
                             Name = "Science Fiction Novel",
                             Price = 19.99m,
                             StockQuantity = 100
                         });
                 });
 
-            modelBuilder.Entity("EComApp.Models.Refund", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Refund", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -530,7 +708,21 @@ namespace ECommerceAPI.Migrations
                     b.Property<DateTime?>("CompletedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("InitiatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("PaymentId")
@@ -565,13 +757,27 @@ namespace ECommerceAPI.Migrations
                     b.ToTable("Refunds");
                 });
 
-            modelBuilder.Entity("EComApp.Models.Status", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Status", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -586,78 +792,118 @@ namespace ECommerceAPI.Migrations
                         new
                         {
                             Id = 1,
+                            CreatedBy = "System",
+                            CreatedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2628),
+                            ModifiedBy = "System",
+                            ModifiedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2631),
                             Name = "Pending"
                         },
                         new
                         {
                             Id = 2,
+                            CreatedBy = "System",
+                            CreatedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2632),
+                            ModifiedBy = "System",
+                            ModifiedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2633),
                             Name = "Processing"
                         },
                         new
                         {
                             Id = 3,
+                            CreatedBy = "System",
+                            CreatedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2634),
+                            ModifiedBy = "System",
+                            ModifiedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2634),
                             Name = "Shipped"
                         },
                         new
                         {
                             Id = 4,
+                            CreatedBy = "System",
+                            CreatedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2635),
+                            ModifiedBy = "System",
+                            ModifiedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2635),
                             Name = "Delivered"
                         },
                         new
                         {
                             Id = 5,
+                            CreatedBy = "System",
+                            CreatedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2636),
+                            ModifiedBy = "System",
+                            ModifiedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2636),
                             Name = "Canceled"
                         },
                         new
                         {
                             Id = 6,
+                            CreatedBy = "System",
+                            CreatedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2637),
+                            ModifiedBy = "System",
+                            ModifiedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2637),
                             Name = "Completed"
                         },
                         new
                         {
                             Id = 7,
+                            CreatedBy = "System",
+                            CreatedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2637),
+                            ModifiedBy = "System",
+                            ModifiedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2638),
                             Name = "Failed"
                         },
                         new
                         {
                             Id = 8,
+                            CreatedBy = "System",
+                            CreatedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2638),
+                            ModifiedBy = "System",
+                            ModifiedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2639),
                             Name = "Approved"
                         },
                         new
                         {
                             Id = 9,
+                            CreatedBy = "System",
+                            CreatedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2639),
+                            ModifiedBy = "System",
+                            ModifiedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2639),
                             Name = "Rejected"
                         },
                         new
                         {
                             Id = 10,
+                            CreatedBy = "System",
+                            CreatedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2640),
+                            ModifiedBy = "System",
+                            ModifiedOn = new DateTime(2026, 10, 10, 13, 56, 16, 958, DateTimeKind.Utc).AddTicks(2640),
                             Name = "Refunded"
                         });
                 });
 
-            modelBuilder.Entity("EComApp.Models.Address", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Address", b =>
                 {
-                    b.HasOne("EComApp.Models.Customer", null)
+                    b.HasOne("ECommerceAPI.Models.Customer", null)
                         .WithMany("Addresses")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EComApp.Models.Cancellation", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Cancellation", b =>
                 {
-                    b.HasOne("EComApp.Models.Order", "Order")
+                    b.HasOne("ECommerceAPI.Models.Order", "Order")
                         .WithOne("Cancellation")
-                        .HasForeignKey("EComApp.Models.Cancellation", "OrderId")
+                        .HasForeignKey("ECommerceAPI.Models.Cancellation", "OrderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("EComApp.Models.Cart", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Cart", b =>
                 {
-                    b.HasOne("EComApp.Models.Customer", "Customer")
+                    b.HasOne("ECommerceAPI.Models.Customer", "Customer")
                         .WithMany("Carts")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -666,15 +912,15 @@ namespace ECommerceAPI.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("EComApp.Models.CartItem", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.CartItem", b =>
                 {
-                    b.HasOne("EComApp.Models.Cart", "Cart")
+                    b.HasOne("ECommerceAPI.Models.Cart", "Cart")
                         .WithMany("CartItems")
                         .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EComApp.Models.Product", "Product")
+                    b.HasOne("ECommerceAPI.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -685,15 +931,15 @@ namespace ECommerceAPI.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("EComApp.Models.Feedback", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Feedback", b =>
                 {
-                    b.HasOne("EComApp.Models.Customer", "Customer")
+                    b.HasOne("ECommerceAPI.Models.Customer", "Customer")
                         .WithMany("FeedBacks")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("EComApp.Models.Product", "Product")
+                    b.HasOne("ECommerceAPI.Models.Product", "Product")
                         .WithMany("Feedbacks")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -704,21 +950,21 @@ namespace ECommerceAPI.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("EComApp.Models.Order", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Order", b =>
                 {
-                    b.HasOne("EComApp.Models.Address", "BillingAddress")
+                    b.HasOne("ECommerceAPI.Models.Address", "BillingAddress")
                         .WithMany()
                         .HasForeignKey("BillingAddressId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("EComApp.Models.Customer", "Customer")
+                    b.HasOne("ECommerceAPI.Models.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EComApp.Models.Address", "ShippingAddress")
+                    b.HasOne("ECommerceAPI.Models.Address", "ShippingAddress")
                         .WithMany()
                         .HasForeignKey("ShippingAddressId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -731,15 +977,15 @@ namespace ECommerceAPI.Migrations
                     b.Navigation("ShippingAddress");
                 });
 
-            modelBuilder.Entity("EComApp.Models.OrderItem", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.OrderItem", b =>
                 {
-                    b.HasOne("EComApp.Models.Order", "Order")
+                    b.HasOne("ECommerceAPI.Models.Order", "Order")
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EComApp.Models.Product", "Product")
+                    b.HasOne("ECommerceAPI.Models.Product", "Product")
                         .WithMany("OrderItems")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -750,20 +996,20 @@ namespace ECommerceAPI.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("EComApp.Models.Payment", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Payment", b =>
                 {
-                    b.HasOne("EComApp.Models.Order", "Order")
+                    b.HasOne("ECommerceAPI.Models.Order", "Order")
                         .WithOne("Payment")
-                        .HasForeignKey("EComApp.Models.Payment", "OrderId")
+                        .HasForeignKey("ECommerceAPI.Models.Payment", "OrderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Order");
                 });
 
-            modelBuilder.Entity("EComApp.Models.Product", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Product", b =>
                 {
-                    b.HasOne("EComApp.Models.Category", "Category")
+                    b.HasOne("ECommerceAPI.Models.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -772,17 +1018,17 @@ namespace ECommerceAPI.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("EComApp.Models.Refund", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Refund", b =>
                 {
-                    b.HasOne("EComApp.Models.Cancellation", "Cancellation")
+                    b.HasOne("ECommerceAPI.Models.Cancellation", "Cancellation")
                         .WithOne("Refund")
-                        .HasForeignKey("EComApp.Models.Refund", "CancellationId")
+                        .HasForeignKey("ECommerceAPI.Models.Refund", "CancellationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EComApp.Models.Payment", "Payment")
+                    b.HasOne("ECommerceAPI.Models.Payment", "Payment")
                         .WithOne("Refund")
-                        .HasForeignKey("EComApp.Models.Refund", "PaymentId")
+                        .HasForeignKey("ECommerceAPI.Models.Refund", "PaymentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -791,23 +1037,23 @@ namespace ECommerceAPI.Migrations
                     b.Navigation("Payment");
                 });
 
-            modelBuilder.Entity("EComApp.Models.Cancellation", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Cancellation", b =>
                 {
                     b.Navigation("Refund")
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EComApp.Models.Cart", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Cart", b =>
                 {
                     b.Navigation("CartItems");
                 });
 
-            modelBuilder.Entity("EComApp.Models.Category", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Category", b =>
                 {
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("EComApp.Models.Customer", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Customer", b =>
                 {
                     b.Navigation("Addresses");
 
@@ -818,7 +1064,7 @@ namespace ECommerceAPI.Migrations
                     b.Navigation("Orders");
                 });
 
-            modelBuilder.Entity("EComApp.Models.Order", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Order", b =>
                 {
                     b.Navigation("Cancellation")
                         .IsRequired();
@@ -829,13 +1075,13 @@ namespace ECommerceAPI.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EComApp.Models.Payment", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Payment", b =>
                 {
                     b.Navigation("Refund")
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("EComApp.Models.Product", b =>
+            modelBuilder.Entity("ECommerceAPI.Models.Product", b =>
                 {
                     b.Navigation("Feedbacks");
 

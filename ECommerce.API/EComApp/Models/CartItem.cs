@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ECommerceAPI.Models
 {
-    public class CartItem
+    public class CartItem : AuditableEntity
     {
         public int Id { get; set; }
         [Required]

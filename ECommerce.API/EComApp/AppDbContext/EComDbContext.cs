@@ -1,12 +1,56 @@
-﻿using ECommerceAPI.Models;
+﻿using System.Security.Claims;
+using ECommerceAPI.Models;
 using Microsoft.EntityFrameworkCore;
 namespace ECommerceAPI.AppDbContext
 {
     public class EComDbContext : DbContext
     {
-        public EComDbContext(DbContextOptions<EComDbContext> options) : base(options)
-        {
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
+        public EComDbContext(DbContextOptions<EComDbContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        public override int SaveChanges()
+        {
+            ApplyAuditFields();
+            return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            ApplyAuditFields();
+            return base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void ApplyAuditFields()
+        {
+            var currentUser = _httpContextAccessor?.HttpContext?.User?.Identity?.IsAuthenticated == true
+                ? _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Email)
+                  ?? _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name)
+                  ?? _httpContextAccessor.HttpContext.User.Identity.Name
+                  ?? "System"
+                : "System";
+
+            var now = DateTime.UtcNow;
+
+            foreach (var entry in ChangeTracker.Entries<AuditableEntity>())
+            {
+                if (entry.Entity == null) continue;
+
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Entity.CreatedOn = now;
+                    entry.Entity.CreatedBy = currentUser;
+                }
+
+                if (entry.State == EntityState.Added || entry.State == EntityState.Modified)
+                {
+                    entry.Entity.ModifiedOn = now;
+                    entry.Entity.ModifiedBy = currentUser;
+                }
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -81,7 +125,7 @@ namespace ECommerceAPI.AppDbContext
                     Description = "Latest model smartphone with advanced features.",
                     Price = 699.99m,
                     StockQuantity = 50,
-                    ImageUrl = "https://example.com/images/smartphone.jpg",
+                    ImageUrl = "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80",
                     DiscountPercentage = 10,
                     CategoryId = 1,
                     IsAvailable = true
@@ -93,7 +137,7 @@ namespace ECommerceAPI.AppDbContext
                     Description = "High-performance laptop suitable for all your needs.",
                     Price = 999.99m,
                     StockQuantity = 30,
-                    ImageUrl = "https://example.com/images/laptop.jpg",
+                    ImageUrl = "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=800&q=80",
                     DiscountPercentage = 15,
                     CategoryId = 1,
                     IsAvailable = true
@@ -105,7 +149,7 @@ namespace ECommerceAPI.AppDbContext
                     Description = "A thrilling science fiction novel set in the future.",
                     Price = 19.99m,
                     StockQuantity = 100,
-                    ImageUrl = "https://example.com/images/scifi-novel.jpg",
+                    ImageUrl = "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80",
                     DiscountPercentage = 5,
                     CategoryId = 2,
                     IsAvailable = true

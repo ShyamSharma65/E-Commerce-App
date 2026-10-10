@@ -2,7 +2,7 @@
 
 namespace ECommerceAPI.Models
 {
-    public class Status
+    public class Status : AuditableEntity
     {
         [Required]
         public int Id { get; set; }

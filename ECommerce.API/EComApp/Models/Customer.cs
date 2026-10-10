@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace ECommerceAPI.Models
 {
     [Index(nameof(Email), Name = "IX_EMAIL_UNIQUE", IsUnique = true)]
-    public class Customer
+    public class Customer : AuditableEntity
     {
         public int Id { get; set; }
 
@@ -28,6 +28,10 @@ namespace ECommerceAPI.Models
 
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
+
+        [Required]
+        public string Role { get; set; } = "Customer";
+
         public bool IsActive { get; set; }
         public ICollection<Address> Addresses { get; set; }
         public ICollection<Order> Orders { get; set; }

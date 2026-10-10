@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ECommerceAPI.Models
 {
-    public class Order
+    public class Order : AuditableEntity
     {
         public int Id { get; set; }
         [Required]

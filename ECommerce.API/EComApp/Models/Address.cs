@@ -2,7 +2,7 @@
 
 namespace ECommerceAPI.Models
 {
-    public class Address
+    public class Address : AuditableEntity
     {
         public int Id { get; set; }
 

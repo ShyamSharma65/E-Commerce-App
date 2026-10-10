@@ -1,35 +1,34 @@
 <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-5">
-            <div class="card shadow">
-                <div class="card-body">
-                    <h3 class="text-center mb-4">Login Form</h3>
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <div class="card shadow">
+        <div class="card-body p-4">
+          <h3 class="text-center mb-4">Login</h3>
 
-                    <form>
-                        <!-- Email -->
-                        <div class="mb-3">
-                            <label class="form-label">Email address</label>
-                            <input type="email" class="form-control" placeholder="Enter email">
-                        </div>
+          <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
 
-                        <!-- Password -->
-                        <div class="mb-3">
-                            <label class="form-label">Password</label>
-                            <input type="password" class="form-control" placeholder="Enter password">
-                        </div>
-
-                        <!-- Submit -->
-                        <button type="submit" class="btn btn-primary w-100">
-                            Login
-                        </button>
-
-                        <div class="d-flex justify-content-between align-items-center mt-2">
-                            <button type="button" class="btn btn-link p-0 forgot-btn">Forgot password</button>
-                            <button type="button" class="btn btn-outline-secondary" (click)="registerAccount()">Create Account</button>
-                        </div>
-                    </form>
-                </div>
+          <form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+            <div class="mb-3">
+              <label class="form-label">Email address</label>
+              <input type="email" class="form-control" formControlName="email" placeholder="Enter email">
             </div>
+
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input type="password" class="form-control" formControlName="password" placeholder="Enter password">
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100" [disabled]="loginForm.invalid">
+              Login
+            </button>
+
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <button type="button" class="btn btn-link p-0 forgot-btn">Forgot password</button>
+              <button type="button" class="btn btn-outline-secondary" (click)="registerAccount()">Create Account</button>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </div>
