@@ -9,6 +9,7 @@ namespace ECommerceAPI.Application.Services
     public interface IAuthService
     {
         Task<AuthResponseDto> RegisterAsync(RegisterRequestDto request);
+        Task<AdminRegistrationResponseDto> RegisterAdminAsync(RegisterRequestDto request);
         Task<AuthResponseDto> LoginAsync(LoginRequestDto request);
     }
 
@@ -25,27 +26,7 @@ namespace ECommerceAPI.Application.Services
 
         public async Task<AuthResponseDto> RegisterAsync(RegisterRequestDto request)
         {
-            if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
-                throw new InvalidOperationException("Email and password are required.");
-
-            if (await _context.Customers.AnyAsync(c => c.Email == request.Email))
-                throw new InvalidOperationException("User already registered with this email.");
-
-            var customer = new Customer
-            {
-                FirstName = request.FirstName,
-                MiddleName = request.MiddleName,
-                LastName = request.LastName,
-                Email = request.Email,
-                PhoneNumber = request.Phone,
-                DateOfBirth = request.DateOfBirth,
-                Password = request.Password,
-                Role = "Customer",
-                IsActive = true
-            };
-
-            _context.Customers.Add(customer);
-            await _context.SaveChangesAsync();
+            var customer = await CreateAccountAsync(request, "Customer");
 
             var token = _jwtTokenService.GenerateToken(customer);
 
@@ -58,6 +39,46 @@ namespace ECommerceAPI.Application.Services
                 Token = token,
                 Message = "Registration successful."
             };
+        }
+
+        public async Task<AdminRegistrationResponseDto> RegisterAdminAsync(RegisterRequestDto request)
+        {
+            var admin = await CreateAccountAsync(request, "Admin");
+
+            return new AdminRegistrationResponseDto
+            {
+                Id = admin.Id,
+                Email = admin.Email,
+                FullName = $"{admin.FirstName} {admin.LastName}".Trim(),
+                Role = admin.Role,
+                Message = "Admin account created successfully."
+            };
+        }
+
+        private async Task<Customer> CreateAccountAsync(RegisterRequestDto request, string role)
+        {
+            if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
+                throw new InvalidOperationException("Email and password are required.");
+
+            if (await _context.Customers.AnyAsync(customer => customer.Email == request.Email))
+                throw new InvalidOperationException("User already registered with this email.");
+
+            var customer = new Customer
+            {
+                FirstName = request.FirstName,
+                MiddleName = request.MiddleName,
+                LastName = request.LastName,
+                Email = request.Email,
+                PhoneNumber = request.Phone,
+                DateOfBirth = request.DateOfBirth,
+                Password = request.Password,
+                Role = role,
+                IsActive = true
+            };
+
+            _context.Customers.Add(customer);
+            await _context.SaveChangesAsync();
+            return customer;
         }
 
         public async Task<AuthResponseDto> LoginAsync(LoginRequestDto request)

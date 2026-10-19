@@ -1,0 +1,160 @@
+<div class="admin-shell">
+  <header class="admin-topbar">
+    <a class="admin-brand" routerLink="/" aria-label="ECommerce home">
+      <span class="brand-mark">E</span>
+      <span>
+        <strong>ECommerce</strong>
+        <small>Administration</small>
+      </span>
+    </a>
+    <div class="topbar-actions">
+      <a class="register-link" routerLink="/register">Register account</a>
+      <button type="button" class="logout-button" (click)="logout()">Sign out</button>
+    </div>
+  </header>
+
+  <main class="admin-main">
+    <div class="page-heading">
+      <div>
+        <p class="eyebrow">STORE OPERATIONS</p>
+        <h1>Admin workspace</h1>
+      </div>
+      <div class="section-switch" role="tablist" aria-label="Admin sections">
+        <button type="button" role="tab" [attr.aria-selected]="activeSection === 'catalog'" [class.active]="activeSection === 'catalog'" (click)="showSection('catalog')">Catalog</button>
+        <button type="button" role="tab" [attr.aria-selected]="activeSection === 'orders'" [class.active]="activeSection === 'orders'" (click)="showSection('orders')">Orders</button>
+      </div>
+    </div>
+
+    <div *ngIf="successMessage" class="feedback success" role="status">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="feedback error" role="alert">{{ errorMessage }}</div>
+
+    <section *ngIf="activeSection === 'catalog'" class="catalog-section" aria-labelledby="catalog-heading">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">PRODUCT MANAGEMENT</p>
+          <h2 id="catalog-heading">Add a product</h2>
+        </div>
+        <span class="record-count">{{ products.length }} products</span>
+      </div>
+
+      <div class="catalog-layout">
+        <form class="product-form" [formGroup]="productForm" (ngSubmit)="createProduct()">
+          <div class="field-grid">
+            <label class="field full-width">
+              <span>Product name</span>
+              <input type="text" formControlName="name" maxlength="100" autocomplete="off">
+              <small *ngIf="productForm.controls.name.touched && productForm.controls.name.invalid">Enter 3 to 100 characters.</small>
+            </label>
+
+            <label class="field full-width">
+              <span>Description</span>
+              <textarea formControlName="description" rows="3"></textarea>
+              <small *ngIf="productForm.controls.description.touched && productForm.controls.description.invalid">Enter at least 10 characters.</small>
+            </label>
+
+            <label class="field">
+              <span>Price</span>
+              <input type="number" formControlName="price" min="0.01" max="10000" step="0.01">
+            </label>
+            <label class="field">
+              <span>Stock quantity</span>
+              <input type="number" formControlName="stockQuantity" min="0" max="1000" step="1">
+            </label>
+
+            <label class="field full-width">
+              <span>Image URL</span>
+              <input type="url" formControlName="imageUrl" maxlength="2048" autocomplete="url">
+            </label>
+
+            <label class="field">
+              <span>Discount (%)</span>
+              <input type="number" formControlName="discountPercentage" min="0" max="100" step="1">
+            </label>
+            <label class="field">
+              <span>Category</span>
+              <select formControlName="categoryId">
+                <option [ngValue]="null" disabled>Select category</option>
+                <option *ngFor="let category of categories" [ngValue]="category.id">{{ category.name }}</option>
+              </select>
+            </label>
+          </div>
+
+          <label class="availability-toggle">
+            <input type="checkbox" formControlName="isAvailable">
+            <span>Available for purchase</span>
+          </label>
+
+          <button class="primary-button" type="submit" [disabled]="isSavingProduct || productForm.invalid || !categories.length">
+            {{ isSavingProduct ? 'Saving product…' : 'Save product' }}
+          </button>
+        </form>
+
+        <div class="product-list" aria-label="Current catalog products">
+          <div class="list-heading">
+            <h3>Catalog</h3>
+            <span>{{ products.length }}</span>
+          </div>
+          <p *ngIf="isLoadingProducts" class="empty-message">Loading catalog…</p>
+          <p *ngIf="!isLoadingProducts && !products.length" class="empty-message">No products found.</p>
+          <article class="product-row" *ngFor="let product of products">
+            <img [src]="product.imageUrl" [alt]="product.name" loading="lazy">
+            <div class="product-copy">
+              <strong>{{ product.name }}</strong>
+              <span>{{ product.categoryName }} · {{ product.stockQuantity }} in stock</span>
+            </div>
+            <div class="product-price">
+              <strong>₹{{ product.price | number:'1.2-2' }}</strong>
+              <span [class.unavailable]="!product.isAvailable">{{ product.isAvailable ? 'Available' : 'Hidden' }}</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section *ngIf="activeSection === 'orders'" class="orders-section" aria-labelledby="orders-heading">
+      <div class="section-title">
+        <div>
+          <p class="eyebrow">FULFILLMENT</p>
+          <h2 id="orders-heading">Order status</h2>
+        </div>
+        <span class="record-count">{{ orders.length }} orders</span>
+      </div>
+
+      <div class="orders-table-wrap">
+        <table class="orders-table">
+          <thead>
+            <tr>
+              <th scope="col">Order</th>
+              <th scope="col">Placed</th>
+              <th scope="col">Total</th>
+              <th scope="col">Status</th>
+              <th scope="col"><span class="visually-hidden">Save status</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of orders">
+              <td data-label="Order">
+                <strong>{{ order.orderNumber }}</strong>
+                <small>#{{ order.id }}</small>
+              </td>
+              <td data-label="Placed">{{ order.createdAt | date:'mediumDate' }}</td>
+              <td data-label="Total">₹{{ order.totalAmount | number:'1.2-2' }}</td>
+              <td data-label="Status">
+                <select [ngModel]="selectedStatuses[order.id]" (ngModelChange)="setOrderStatus(order.id, $event)" [ngModelOptions]="{ standalone: true }" [name]="'status-' + order.id">
+                  <option *ngFor="let status of statuses" [ngValue]="status">{{ status }}</option>
+                </select>
+              </td>
+              <td class="save-cell">
+                <button type="button" class="save-status-button" [disabled]="savingOrderId === order.id || selectedStatuses[order.id] === order.status" (click)="saveOrderStatus(order)">
+                  {{ savingOrderId === order.id ? 'Saving…' : 'Update' }}
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p *ngIf="isLoadingOrders" class="empty-message">Loading orders…</p>
+        <p *ngIf="!isLoadingOrders && !orders.length" class="empty-message">No orders to display.</p>
+      </div>
+    </section>
+  </main>
+</div>

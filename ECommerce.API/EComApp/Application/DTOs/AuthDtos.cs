@@ -27,6 +27,15 @@ namespace ECommerceAPI.Application.DTOs
         public string Message { get; set; } = string.Empty;
     }
 
+    public class AdminRegistrationResponseDto
+    {
+        public int Id { get; set; }
+        public string Email { get; set; } = string.Empty;
+        public string FullName { get; set; } = string.Empty;
+        public string Role { get; set; } = string.Empty;
+        public string Message { get; set; } = string.Empty;
+    }
+
     public class ProductDto
     {
         public int Id { get; set; }

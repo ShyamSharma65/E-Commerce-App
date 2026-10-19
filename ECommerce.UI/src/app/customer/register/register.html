@@ -3,11 +3,20 @@
     <div class="col-md-8 col-lg-7">
       <div class="card shadow">
         <div class="card-body p-4">
-          <h3 class="text-center mb-4">Create Account</h3>
+          <h3 class="text-center mb-4">{{ isAdmin() ? 'Register an account' : 'Create Account' }}</h3>
 
+          <div *ngIf="successMessage" class="alert alert-success" role="status">{{ successMessage }}</div>
           <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
 
           <form [formGroup]="registerForm" (ngSubmit)="register()">
+            <div *ngIf="isAdmin()" class="mb-3">
+              <label class="form-label" for="accountRole">Account role</label>
+              <select id="accountRole" class="form-select" formControlName="accountRole">
+                <option value="Customer">Customer</option>
+                <option value="Admin">Admin</option>
+              </select>
+            </div>
+
             <div class="mb-3">
               <label class="form-label">Email address <span class="text-danger">*</span></label>
               <input type="email" class="form-control" formControlName="email" placeholder="Enter email">
@@ -54,7 +63,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary w-100" [disabled]="registerForm.invalid">
-              Register
+              {{ isAdmin() ? 'Create ' + registerForm.controls.accountRole.value + ' account' : 'Register' }}
             </button>
             <button type="button" class="btn btn-link mt-2" (click)="gotoLogin()">Already have an account? Login</button>
           </form>

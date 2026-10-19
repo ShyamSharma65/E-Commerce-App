@@ -8,7 +8,9 @@ namespace ECommerceAPI.Application.Services
     public interface IOrderService
     {
         Task<List<OrderSummaryDto>> GetMyOrdersAsync(int customerId);
+        Task<List<OrderSummaryDto>> GetAllOrdersAsync(CancellationToken cancellationToken);
         Task<OrderSummaryDto> CheckoutAsync(int customerId, CheckoutOrderRequestDto request);
+        Task<OrderSummaryDto?> UpdateOrderStatusAsync(int orderId, OrderStatus status, CancellationToken cancellationToken);
     }
 
     public class OrderService : IOrderService
@@ -34,6 +36,23 @@ namespace ECommerceAPI.Application.Services
                 TotalAmount = o.TotalAmount,
                 Status = o.OrderStatus.ToString(),
                 CreatedAt = o.OrderDate
+            }).ToList();
+        }
+
+        public async Task<List<OrderSummaryDto>> GetAllOrdersAsync(CancellationToken cancellationToken)
+        {
+            var orders = await _context.Orders
+                .AsNoTracking()
+                .OrderByDescending(order => order.OrderDate)
+                .ToListAsync(cancellationToken);
+
+            return orders.Select(order => new OrderSummaryDto
+            {
+                Id = order.Id,
+                OrderNumber = order.OrderNumber,
+                TotalAmount = order.TotalAmount,
+                Status = order.OrderStatus.ToString(),
+                CreatedAt = order.OrderDate
             }).ToList();
         }
 
@@ -103,6 +122,29 @@ namespace ECommerceAPI.Application.Services
             cart.IsCheckedOut = true;
             cart.UpdatedAt = DateTime.UtcNow;
             await _context.SaveChangesAsync();
+
+            return new OrderSummaryDto
+            {
+                Id = order.Id,
+                OrderNumber = order.OrderNumber,
+                TotalAmount = order.TotalAmount,
+                Status = order.OrderStatus.ToString(),
+                CreatedAt = order.OrderDate
+            };
+        }
+
+        public async Task<OrderSummaryDto?> UpdateOrderStatusAsync(int orderId, OrderStatus status, CancellationToken cancellationToken)
+        {
+            var order = await _context.Orders
+                .FirstOrDefaultAsync(order => order.Id == orderId, cancellationToken);
+
+            if (order is null)
+            {
+                return null;
+            }
+
+            order.OrderStatus = status;
+            await _context.SaveChangesAsync(cancellationToken);
 
             return new OrderSummaryDto
             {

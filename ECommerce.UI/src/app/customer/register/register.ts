@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { afterNextRender, Component, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Cutomerservice } from '../service/cutomerservice';
@@ -15,8 +15,14 @@ import { RegisterData } from '../Models/registerCustomer';
 export class Register {
   registerData: RegisterData | null = null;
   errorMessage = '';
+  successMessage = '';
+  readonly isAdmin = signal(false);
 
-  constructor(private router: Router, private customerService: Cutomerservice) {}
+  constructor(private router: Router, private customerService: Cutomerservice) {
+    afterNextRender(() => {
+      this.isAdmin.set(this.customerService.isAdmin());
+    });
+  }
 
   registerForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -26,7 +32,8 @@ export class Register {
     phone: new FormControl('', Validators.required),
     dob: new FormControl('', Validators.required),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)])
+    confirmPassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    accountRole: new FormControl<'Customer' | 'Admin'>('Customer', { nonNullable: true })
   });
 
   gotoLogin() {
@@ -55,8 +62,33 @@ export class Register {
       password: formValue.password ?? ''
     };
 
-    this.customerService.registerCustomer(this.registerData).subscribe({
+    this.errorMessage = '';
+    this.successMessage = '';
+    const isAdminRegistration = this.isAdmin() && formValue.accountRole === 'Admin';
+    const registration = isAdminRegistration
+      ? this.customerService.registerAdmin(this.registerData)
+      : this.customerService.registerCustomer(this.registerData);
+
+    registration.subscribe({
       next: () => {
+        if (this.isAdmin()) {
+          this.successMessage = isAdminRegistration
+            ? 'Admin account created. They can now sign in.'
+            : 'Customer account created successfully.';
+          this.registerForm.reset({
+            email: '',
+            firstName: '',
+            middleName: '',
+            lastName: '',
+            phone: '',
+            dob: '',
+            password: '',
+            confirmPassword: '',
+            accountRole: 'Customer'
+          });
+          return;
+        }
+
         this.router.navigate(['login']);
       },
       error: (err) => {

@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartSummary, Cutomerservice, Product } from '../service/cutomerservice';
 
@@ -16,15 +16,26 @@ export class Home implements OnInit {
   cart: CartSummary = { cartId: 0, items: [], totalAmount: 0, totalItems: 0 };
   orders: any[] = [];
   isLoggedIn = false;
+  isAdmin = false;
   statusMessage = '';
   selectedCategory = 'All';
   categories = ['All', 'Electronics', 'Books', 'Best Sellers', 'New Arrivals'];
 
-  constructor(private router: Router, private customerService: Cutomerservice) {}
+  constructor(
+    private router: Router,
+    private customerService: Cutomerservice,
+    @Inject(PLATFORM_ID) private platformId: object
+  ) {}
 
   ngOnInit(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     this.isLoggedIn = this.customerService.isAuthenticated();
-    if (!this.isLoggedIn) {
+    this.isAdmin = this.customerService.isAdmin();
+    if (this.isAdmin) {
+      this.router.navigate(['/admin']);
       return;
     }
 
@@ -59,7 +70,13 @@ export class Home implements OnInit {
     this.customerService.getProducts().subscribe((products) => {
       this.products = products;
       this.applyCategoryFilter();
+    }, () => {
+      this.statusMessage = 'Unable to load products right now. Please try again later.';
     });
+
+    if (!this.isLoggedIn) {
+      return;
+    }
 
     this.customerService.getCart().subscribe({
       next: (cart) => {
@@ -67,7 +84,10 @@ export class Home implements OnInit {
       },
       error: () => {
         this.customerService.logout();
-        this.router.navigate(['login']);
+        this.isLoggedIn = false;
+        this.cart = { cartId: 0, items: [], totalAmount: 0, totalItems: 0 };
+        this.orders = [];
+        this.statusMessage = 'Your session has expired. Please log in again to continue shopping.';
       }
     });
 
@@ -140,6 +160,7 @@ export class Home implements OnInit {
   logout(): void {
     this.customerService.logout();
     this.isLoggedIn = false;
-    this.router.navigate(['login']);
+    this.cart = { cartId: 0, items: [], totalAmount: 0, totalItems: 0 };
+    this.orders = [];
   }
 }

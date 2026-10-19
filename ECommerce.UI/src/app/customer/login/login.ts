@@ -37,7 +37,7 @@ export class Login {
 
         if (token) {
           this.customerService.storeToken(token);
-          this.router.navigate(['']);
+          this.router.navigate([this.customerService.isAdmin() ? '/admin' : '/']);
           return;
         }
 

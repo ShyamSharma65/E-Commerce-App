@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "6L4NJ1E+eck=",
+  "success": true,
+  "projectFilePath": "F:\\GitHubRepo\\ShyamProjects\\E-CommerceApp_Fullstack\\ECommerce.API\\ECommerce.Gateway\\ECommerce.Gateway.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\91805\\.nuget\\packages\\system.io.hashing\\8.0.0\\system.io.hashing.8.0.0.nupkg.sha512",
+    "C:\\Users\\91805\\.nuget\\packages\\yarp.reverseproxy\\2.2.0\\yarp.reverseproxy.2.2.0.nupkg.sha512"
+  ],
+  "logs": []
+}

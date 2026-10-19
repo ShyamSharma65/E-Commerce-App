@@ -30,6 +30,25 @@ namespace ECommerceAPI.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPost("register-admin")]
+        [ProducesResponseType(typeof(AdminRegistrationResponseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<ActionResult<AdminRegistrationResponseDto>> RegisterAdmin([FromBody] RegisterRequestDto request)
+        {
+            try
+            {
+                var result = await _authService.RegisterAdminAsync(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         [HttpPost("login")]
         public async Task<ActionResult<AuthResponseDto>> Login([FromBody] LoginRequestDto request)
         {
